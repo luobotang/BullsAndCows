@@ -1,0 +1,83 @@
+/* 猜数字界面样式 */
+div, h3, p {
+	margin: 0;
+	padding: 0;
+}
+#GuessNumer {
+	display: block;
+	position: relative;
+	margin: 100px auto;
+	width: 300px;
+	font: 16px "微软雅黑";
+}
+
+#GuessNumer .input,
+#GuessNumer .btns,
+#GuessNumer #.output {
+	width: 100%;
+}
+
+#GuessNumer #nums {
+	height: 40px;
+	line-height: 40px;
+	font: 36px Consolas;
+	text-align: left;
+	border: 1px solid #ccc;
+	display: block;
+	padding: 3px 0;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+}
+
+#GuessNumer .btns {
+	height: 25px;
+}
+
+#GuessNumer input[type="button"] {
+	font: 16px "微软雅黑";
+	min-width: 100px;
+	border: 1px solid #333;
+	border-left: none;
+	background-color: #ffe;
+	margin: 0;
+	padding: 0;
+	display: block;
+	float: left;
+}
+#GuessNumer input[type="button"]:first-child {
+	border-left: 1px solid #333;
+	border-radius: 3px 0 0 3px;
+}
+#GuessNumer input[type="button"]:last-child {
+	border-radius: 0 3px 3px 0;
+}
+#GuessNumer input[type="button"]:hover {
+	background-color: #69f;
+	color: #fff;
+}
+
+#GuessNumer #output p {
+	background-color: #9d9;
+	line-height: 2em;
+	padding: 0 2em;
+	margin-top: 2px;
+	color: #fff;
+	cursor: default;
+}
+
+#GuessNumer #output p:first-child {
+	margin-top: 10px;
+}
+
+#GuessNumer #output .error {
+	background-color: #e99;
+}
+
+#GuessNumer #output .info {
+	background-color: #4c9ed9;
+}
+
+#GuessNumer #output .answer {
+	background-color: #4c9ed9;
+}
