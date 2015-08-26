@@ -38,6 +38,10 @@ input, button {
 
 #GuessNumer .btns {
 	text-align: center;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #GuessNumer button {
@@ -57,7 +61,6 @@ input, button {
 #output {
 	margin-top: 10px;
 }
-
 #output p {
 	background-color: #9d9;
 	line-height: 2em;
@@ -65,16 +68,12 @@ input, button {
 	margin-top: 2px;
 	color: #fff;
 	cursor: default;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
-
-#output .error {
-	background-color: #e99;
-}
-
-#output .info {
-	background-color: #4c9ed9;
-}
-
-#output .success {
-	background-color: green;
-}
+#output .error { background-color: #e99; }
+#output .info { background-color: #4c9ed9; }
+#output .answer { background: orange; }
+#output .success { background-color: green; }

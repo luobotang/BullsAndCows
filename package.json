@@ -4,7 +4,7 @@
   "description": "bulls-cows game",
   "main": "BullsAndCows.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "start BullsAndCows.html"
   },
   "repository": {
     "type": "git",

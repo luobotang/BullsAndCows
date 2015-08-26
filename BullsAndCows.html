@@ -19,56 +19,72 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-	// 规则：至少需要猜测4次以上才能查看答案。
-	var eles = {}, guessCount = 0, canShowAnswer = false;
-	["nums", "guess", "answer", "newRound", "output"]
-		.forEach(function (name) {
+	var eles = {}
+	var guessCount = 0
+
+	var selectors = ["nums", "guess", "answer", "newRound", "output"]
+
+	selectors.forEach(
+		function (name) {
 			eles[name] = document.getElementById(name);
 		})
 
 	newRound()
 
-	var KEY_0 = 49
+	var KEY_left = 37
+	var KEY_top = 38
+	var KEY_right = 39
+	var KEY_down = 40
+	var KEY_backspace = 8
+	var KEY_delete = 46
+	var KEY_0 = 48
 	var KEY_9 = 57
 	var KEY_a = 65
 	var KEY_z = 90
 	var KEY_enter = 13
+	var REG_FOUR_NUMS = /^\d{4}$/
+	var MIN_GUESS_TIMES = 4 // 规则：至少需要猜测4次才能看答案
 
-	// 输入框最多只能输入 4 个字符
-	eles.nums.addEventListener('keydown', function (e) {
+	function onlyAllow4Gidits(e) {
 		var key = e.which
-		if (key >= KEY_0 && key <= KEY_z &&
-			eles.nums.textContent.length === 4 ||
-			key === KEY_enter) {
+		if (key >= KEY_0 && key <= KEY_9 &&
+			e.target.textContent.length === 4 ||
+			(key < KEY_0 || key > KEY_9) &&
+			key !== KEY_backspace &&
+			key !== KEY_delete &&
+			key !== KEY_left &&
+			key !== KEY_right) {
 			e.preventDefault()
-		}
-		if (key === KEY_enter) {
-			guess()
-		}
-	})
-
-	eles.newRound.addEventListener('click', newRound)
-
-	eles.guess.addEventListener('click', guess)
-
-	eles.answer.onclick = function () {
-		var answer = Game.getAnswer();
-		if (answer) {
-			if (canShowAnswer) {
-				showMessage(answer, "answer");
-			} else{
-				showMessage("至少尝试4次才能看答案哦^_^", "error")
-			}
-		} else {
-			showMessage("游戏尚未开始呢", "error")
 		}
 	}
 
+	// 输入框最多只能输入 4 个字符
+	eles.nums.addEventListener('keydown', function (e) {
+		onlyAllow4Gidits(e)
+		if (e.which === KEY_enter) {
+			guess()
+		}
+	})
+	eles.newRound.addEventListener('click', newRound)
+	eles.guess.addEventListener('click', guess)
+	eles.answer.addEventListener('click', showAnswer)
 	eles.output.addEventListener('click', function (e) {
 		if (e.target.tagName = "P") {
 			eles.output.removeChild(e.target)
 		}
 	})
+
+	function showAnswer() {
+		if (!canShowAnswer()) {
+			return showMessage("至少尝试4次才能看答案哦^_^", "error")
+		}
+		var answer = Game.getAnswer();
+		if (answer) {
+			showMessage('答案是：' + answer, "answer")
+		} else {
+			showMessage("游戏尚未开始呢", "error")
+		}
+	}
 
 	function newRound() {
 		eles.nums.textContent = ''
@@ -77,26 +93,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		Game.newRound()
 		guessCount = 0
-		canShowAnswer = false
 		
 		showMessage("新一局游戏开始", "info")
 	}
 
+	function canShowAnswer() {
+		return guessCount >= MIN_GUESS_TIMES
+	}
+
 	function guess() {
-		if (++guessCount >= 4) {
-			canShowAnswer = true
-		}
+		guessCount++
 		var nums = eles.nums.textContent;
-		if (!/^\d{4}$/.test(nums)) {
-			showMessage("请输入4位数字，例如：1234", "error");
-			eles.nums.focus();
-		} else {
+		if (REG_FOUR_NUMS.test(nums)) {
 			var result = Game.guess(nums)
 			if (result.success) {
 				showMessage('恭喜，答对了！', 'success')
 			} else {
 				showMessage(nums + "：" + result.msg)
 			}
+		} else {
+			showMessage("请输入4位数字，例如：1234", "error")
+			eles.nums.focus()
 		}
 	}
 
