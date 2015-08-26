@@ -1,0 +1,27 @@
+{
+  "name": "bulls-cows",
+  "version": "0.1.0",
+  "description": "bulls-cows game",
+  "main": "BullsAndCows.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luobotang/BullsAndCows.git"
+  },
+  "keywords": [
+    "game",
+    "bulls-cows"
+  ],
+  "author": "luobotang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luobotang/BullsAndCows/issues"
+  },
+  "homepage": "https://github.com/luobotang/BullsAndCows#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.0"
+  }
+}

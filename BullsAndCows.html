@@ -7,65 +7,108 @@
 	<script src="BullsAndCows.js"></script>
 </head>
 <body>
-	<form id="GuessNumer">
-		<div class="input">
-			<input id="nums"></input>
-		</div>
+	<div id="GuessNumer">
+		<div id="nums" class="input" contenteditable="true"></div>
 		<div class="btns">
-			<input id="newRound" type="button" value="开始"></input>
-			<input id="guess" type="button" value="猜！"></input>
-			<input id="answer" type="button" value="答案"></input>
+			<button id="newRound">开始</button>
+			<button id="guess">猜！</button>
+			<button id="answer">答案</button>
 		</div>
 		<div id="output"></div>
-	</form>
-	<script>
+	</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
 	// 规则：至少需要猜测4次以上才能查看答案。
 	var eles = {}, guessCount = 0, canShowAnswer = false;
 	["nums", "guess", "answer", "newRound", "output"]
 		.forEach(function (name) {
 			eles[name] = document.getElementById(name);
-		});
-	eles.newRound.onclick = function () {
-		Game.newRound();
-		guessCount = 0;
-		canShowAnswer = false;
-		eles.output.innerHTML = "";
-		showMessage("新一局游戏开始", "info");
-	};
-	eles.guess.onclick = function () {
-		if (++guessCount >= 4) { canShowAnswer = true; }
-		var nums = eles.nums.value, p;
-		if (!/^\d{4}$/.test(nums)) {
-			showMessage("请输入4位数字，例如：1234", "error");
-			eles.nums.focus();
-		} else {
-			showMessage(nums + "：" + Game.guess(nums));
+		})
+
+	newRound()
+
+	var KEY_0 = 49
+	var KEY_9 = 57
+	var KEY_a = 65
+	var KEY_z = 90
+	var KEY_enter = 13
+
+	// 输入框最多只能输入 4 个字符
+	eles.nums.addEventListener('keydown', function (e) {
+		var key = e.which
+		if (key >= KEY_0 && key <= KEY_z &&
+			eles.nums.textContent.length === 4 ||
+			key === KEY_enter) {
+			e.preventDefault()
 		}
-	};
+		if (key === KEY_enter) {
+			guess()
+		}
+	})
+
+	eles.newRound.addEventListener('click', newRound)
+
+	eles.guess.addEventListener('click', guess)
+
 	eles.answer.onclick = function () {
 		var answer = Game.getAnswer();
 		if (answer) {
 			if (canShowAnswer) {
 				showMessage(answer, "answer");
 			} else{
-				showMessage("至少尝试4次才能看答案哦^_^", "error");
+				showMessage("至少尝试4次才能看答案哦^_^", "error")
 			}
 		} else {
-			showMessage("游戏尚未开始呢", "error");
+			showMessage("游戏尚未开始呢", "error")
 		}
-	};
-	eles.output.onclick = function (e) {
+	}
+
+	eles.output.addEventListener('click', function (e) {
 		if (e.target.tagName = "P") {
-			eles.output.removeChild(e.target);
+			eles.output.removeChild(e.target)
 		}
-	};
+	})
+
+	function newRound() {
+		eles.nums.textContent = ''
+		eles.nums.focus()
+		eles.output.textContent = ''
+
+		Game.newRound()
+		guessCount = 0
+		canShowAnswer = false
+		
+		showMessage("新一局游戏开始", "info")
+	}
+
+	function guess() {
+		if (++guessCount >= 4) {
+			canShowAnswer = true
+		}
+		var nums = eles.nums.textContent;
+		if (!/^\d{4}$/.test(nums)) {
+			showMessage("请输入4位数字，例如：1234", "error");
+			eles.nums.focus();
+		} else {
+			var result = Game.guess(nums)
+			if (result.success) {
+				showMessage('恭喜，答对了！', 'success')
+			} else {
+				showMessage(nums + "：" + result.msg)
+			}
+		}
+	}
 
 	function showMessage(message, type) {
 		var p = document.createElement("p");
-		p.className = type || "";
-		p.innerHTML = message;
-		eles.output.insertBefore(p, eles.output.querySelector("p:first-child"));
+		if (type) {
+			p.className = type
+		}
+		p.textContent = message
+		eles.output.insertBefore(p, eles.output.firstChild)
 	}
-	</script>
+})
+</script>
 </body>
 </html>

@@ -1,14 +1,19 @@
-/* 猜数字界面样式 */
-div, h3, p {
+@charset "UTF-8";
+* {
 	margin: 0;
 	padding: 0;
 }
+body,
+input, button {
+	font: 16px/2 arial, "Microsoft Yahei", sans-serif;
+	color: #333;
+}
+
 #GuessNumer {
 	display: block;
 	position: relative;
 	margin: 100px auto;
-	width: 300px;
-	font: 16px "微软雅黑";
+	width: 350px;
 }
 
 #GuessNumer .input,
@@ -18,46 +23,42 @@ div, h3, p {
 }
 
 #GuessNumer #nums {
-	height: 40px;
-	line-height: 40px;
-	font: 36px Consolas;
-	text-align: left;
+	height: 40px; padding: 10px; margin: 10px auto;
+	font: 32px/40px Consolas, monospace;
 	border: 1px solid #ccc;
-	display: block;
-	padding: 3px 0;
-	margin: 10px auto;
+	border-radius: 3px;
 	text-align: center;
-	width: 100%;
+	outline: none;
+}
+#GuessNumer #nums:focus {
+	color: #69f;
+	border-color: #69f;
+	box-shadow: inset 0 0 10px #69f;
 }
 
 #GuessNumer .btns {
-	height: 25px;
+	text-align: center;
 }
 
-#GuessNumer input[type="button"] {
-	font: 16px "微软雅黑";
-	min-width: 100px;
+#GuessNumer button {
+	display: inline-block;
+	width: 100px;
+	margin: 0 5px;
 	border: 1px solid #333;
-	border-left: none;
 	background-color: #ffe;
-	margin: 0;
-	padding: 0;
-	display: block;
-	float: left;
+	border-radius: 3px;
 }
-#GuessNumer input[type="button"]:first-child {
-	border-left: 1px solid #333;
-	border-radius: 3px 0 0 3px;
-}
-#GuessNumer input[type="button"]:last-child {
-	border-radius: 0 3px 3px 0;
-}
-#GuessNumer input[type="button"]:hover {
+
+#GuessNumer button:hover {
 	background-color: #69f;
 	color: #fff;
 }
 
-#GuessNumer #output p {
+#output {
+	margin-top: 10px;
+}
+
+#output p {
 	background-color: #9d9;
 	line-height: 2em;
 	padding: 0 2em;
@@ -66,18 +67,14 @@ div, h3, p {
 	cursor: default;
 }
 
-#GuessNumer #output p:first-child {
-	margin-top: 10px;
-}
-
-#GuessNumer #output .error {
+#output .error {
 	background-color: #e99;
 }
 
-#GuessNumer #output .info {
+#output .info {
 	background-color: #4c9ed9;
 }
 
-#GuessNumer #output .answer {
-	background-color: #4c9ed9;
+#output .success {
+	background-color: green;
 }

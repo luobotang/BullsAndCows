@@ -1,0 +1,1 @@
+window.Game = require('./lib/game.js')
